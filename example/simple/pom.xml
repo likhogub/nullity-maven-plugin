@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.likhogub.nullity</groupId>
+    <artifactId>nullity-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>Nullity Example</name>
+
+    <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>ru.likhogub.nullity.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>ru.likhogub.nullity</groupId>
+                <artifactId>nullity-maven-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>instrument-not-null-return</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>instrument-not-null-return</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>instrument-not-null-parameter</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>instrument-not-null-parameter</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <notNulls>
+                        <notNull>org.jetbrains.annotations.NotNull</notNull>
+                    </notNulls>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
